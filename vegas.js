@@ -1,4 +1,16 @@
-// Let's create our own buy and sell strategy 
+/* VEGAS 1.0
+
+Some parameters are not being used
+
+Parameters: 
+
+percentDecreaseToBuy =  0.015
+percentIncreaseToSell = 0.015
+pastHistory = 15
+dipPercent = 3 
+risePercent = 3
+
+*/ 
 var strat = {};
 var buyPrice
 
