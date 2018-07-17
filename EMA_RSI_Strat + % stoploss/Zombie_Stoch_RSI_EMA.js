@@ -12,7 +12,7 @@ var _ = require('lodash');
 var log = require ('../core/log.js');
 var config = require ('../core/util.js').getConfig();
 
-var RSI = require('./indicators/stochrsi.js');
+var RSI = require('./strategies/stochrsi.js');
 
 // Indicators
 var longEma = 0;
@@ -57,7 +57,7 @@ var strat = {
 
         this.addIndicator('longEMA', 'EMA', this.params.EMA_long);
         this.addIndicator('shortEMA', 'EMA', this.params.EMA_short);
-        this.addIndicator('rsi', 'RSI', { interval: this.settings.interval });
+        this.addIndicator('rsi', 'StochRSI', { interval: this.settings.interval });
     },
 
 
@@ -99,7 +99,7 @@ var strat = {
 
       longEma =  this.indicators.longEMA.result.toFixed(10);
       shortEma = this.indicators.shortEMA.result.toFixed(10);
-      rsi   =    this.indicators.rsi.result.toFixed(10);
+      rsi   =    this.strategies.rsi.result.toFixed(10);
 
       // log.debug('calculated EMA & RSI properties for candle:');
       // log.debug('Long EMA    : ' , longEma);
