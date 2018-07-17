@@ -12,7 +12,7 @@ var _ = require('lodash');
 var log = require ('../core/log.js');
 var config = require ('../core/util.js').getConfig();
 
-var RSI = require('./indicators/RSI.js');
+var RSI = require('./indicators/stochrsi.js');
 
 // Indicators
 var longEma = 0;
