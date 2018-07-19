@@ -80,7 +80,7 @@ method.check = function(candle) {
 // Here is where I could use some assistance translating from pseudo code
 
   //EMA Golden Cross
-  if((shortestResult >  shortResult > longResult > longestResult)
+  if(shortestResult >  shortResult > longResult > longestResult)
     log.debug('we are currently in uptrend', message);
 
     if(this.currentTrend !== 'up') {
