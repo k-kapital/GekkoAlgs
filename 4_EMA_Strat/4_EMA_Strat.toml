@@ -1,0 +1,11 @@
+# shortestEMA size
+shortestSize = 8
+
+# shortEMA size
+shortSize = 13
+
+# longEMA size
+longSize = 21
+
+# longEMA size
+longestSize = 55
