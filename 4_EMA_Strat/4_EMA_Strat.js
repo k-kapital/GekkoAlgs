@@ -64,16 +64,16 @@ method.check = function(candle) {
   var price = candle.close;
   var message = '@ ' + price.toFixed(8);
 
-  // if(stopLossSold){
-  //   if(longResult < shortResult){
-  //     log.debug('Uptrend detected : allowing buying');
-  //     stopLossSold = false;
-  //   }
-  //   log.debug('waiting for Uptrend');
-  //   return;
-  // }else{
-  //   this.stopLoss();
-  // }
+  if(stopLossSold){
+    if(longResult < shortResult){
+      log.debug('Uptrend detected : allowing buying');
+      stopLossSold = false;
+    }
+    log.debug('waiting for Uptrend');
+    return;
+  }else{
+    this.stopLoss();
+  }
 
 // Here is where I could use some assistance translating from pseudo code
   //EMA Golden Cross
@@ -81,8 +81,9 @@ method.check = function(candle) {
     log.debug('we are currently in uptrend', message);
     if(this.currentTrend !== 'up') {
       this.currentTrend = 'up';
+      lastBuyPrice = 0;
       this.advice('short');
-      log.debug("Going to buy");
+      log.debug("Going to sell");
     } else {
       log.debug("Nothing to buy");
       this.advice();
@@ -91,9 +92,9 @@ method.check = function(candle) {
     log.debug('we are currently in a downtrend', message);
     if(this.currentTrend !== 'down') {
       this.currentTrend = 'down';
-      this.advice('short');
+      lastBuyPrice = this.candle.close;
       this.advice('long');
-      log.debug("Going to sell");
+      log.debug("Going to buy");
     } else
       log.debug("Nothing to sell");
       this.advice();
@@ -103,24 +104,26 @@ method.check = function(candle) {
   }
 },
 
-// method.check = function() {
-//   //TODO: if the function has just been called, dont allow buying until the emas cross upwards: this will prevent the bot from riding 3% losses all the way down the downtrend
-//   // NOTE: this was my first thought on a short term support level, get the lowest candle price from the history and basically see how far we are from it.
-//   // historicalCandlePrices.push(this.candle.close);
-//   // historicalCandlePrices.sort();
-//   // var lowestPrice = historicalCandlePrices[0];
-//   currentCandlePrice = this.candle.close;
-//   sellAtPrice = lastBuyPrice - (lastBuyPrice * stopLossPercent);
-//   // log.debug('Last buy price     : ' , lastBuyPrice);
-//   // log.debug('currentCandlePrice : ' , currentCandlePrice);
-//   // log.debug('sellAtPrice        : ' , sellAtPrice);
-//
-//   if(currentCandlePrice <= sellAtPrice){
-//     stopLossSold = true;
-//     lastBuyPrice = 0;
-//     this.advice('short');
-//     log.debug('STOP LOSS HIT. SELLING AT : ' , currentCandlePrice);
-//   }
-// },
+method.stopLoss = function(candle) {
+  //TODO: if the function has just been called, dont allow buying until the emas cross upwards: this will prevent the bot from riding 3% losses all the way down the downtrend
+  // NOTE: this was my first thought on a short term support level, get the lowest candle price from the history and basically see how far we are from it.
+  // historicalCandlePrices.push(this.candle.close);
+  // historicalCandlePrices.sort();
+  // var lowestPrice = historicalCandlePrices[0];
+  currentCandlePrice = this.candle.close;
+  sellAtPrice = lastBuyPrice - (lastBuyPrice * stopLossPercent);
+  // log.debug('Last buy price     : ' , lastBuyPrice);
+  // log.debug('currentCandlePrice : ' , currentCandlePrice);
+  // log.debug('sellAtPrice        : ' , sellAtPrice);
+
+  if(currentCandlePrice <= sellAtPrice){
+    stopLossSold = true;
+    lastBuyPrice = 0;
+    this.advice('short');
+    log.debug('STOP LOSS HIT. SELLING AT : ' , currentCandlePrice);
+  }
+},
+
+
 
 module.exports = method;
