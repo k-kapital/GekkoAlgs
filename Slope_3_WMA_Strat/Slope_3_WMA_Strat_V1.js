@@ -34,7 +34,7 @@ method.updateIndicatorResults = function(){
 for (var property in indicatorData) {
     if (indicatorData.hasOwnProperty(property)) {
         var newResult = thisPointer.talibIndicators[property].result.outReal;
-            log.debug(newResult);
+           // log.debug(newResult);
 
         if(!indicatorData[property].hasOwnProperty('delta')){
             method.addIndicatorProperty(property,'delta', 0);
